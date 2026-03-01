@@ -63,19 +63,21 @@ Timers 1
 Timer1 {"Enable":1,"Mode":0,"Time":"00:30","Window":0,"Days":"1111111","Repeat":1,"Output":4,"Action":0}
 ```
 
-#### Timer2–4 — Morning watering at 05:00 (staggered by 5 min)
+#### Timer2–4 — Morning watering (sunrise-based, staggered by 5 min)
 
-Staggered start times avoid overlapping water pressure on the shared supply.
+Timers use **Mode 1 (sunrise)** with negative offsets, so watering starts before sunrise and adjusts automatically by season. Staggered start times avoid overlapping water pressure on the shared supply.
 
-| Timer | Relay | Starts | Auto-off after | Ends by |
-|-------|-------|--------|----------------|---------|
-| Timer2 | 1 (Trawnik) | 05:00 | 210 s | ~05:03:30 |
-| Timer3 | 2 (Krzaczki) | 05:05 | 180 s | ~05:08:00 |
-| Timer4 | 3 (Doniczki) | 05:10 | 120 s | ~05:12:00 |
+| Timer | Relay | Starts | Auto-off after | Gap to next |
+|-------|-------|--------|----------------|-------------|
+| Timer2 | 1 (Trawnik) | sunrise − 15 min | 210 s (3 min 30 s) | ~1.5 min |
+| Timer3 | 2 (Krzaczki) | sunrise − 10 min | 180 s (3 min) | ~2 min |
+| Timer4 | 3 (Doniczki) | sunrise − 5 min | 120 s (2 min) | — |
 
 ```
-Backlog Timer2 {"Enable":1,"Mode":0,"Time":"05:00","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":1}; Timer3 {"Enable":1,"Mode":0,"Time":"05:05","Window":0,"Days":"1111111","Repeat":1,"Output":2,"Action":1}; Timer4 {"Enable":1,"Mode":0,"Time":"05:10","Window":0,"Days":"1111111","Repeat":1,"Output":3,"Action":1}
+Backlog Timer2 {"Enable":1,"Mode":1,"Time":"-00:15","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":1}; Timer3 {"Enable":1,"Mode":1,"Time":"-00:10","Window":0,"Days":"1111111","Repeat":1,"Output":2,"Action":1}; Timer4 {"Enable":1,"Mode":1,"Time":"-00:05","Window":0,"Days":"1111111","Repeat":1,"Output":3,"Action":1}
 ```
+
+> Requires `Latitude` and `Longitude` to be set (done above).
 
 ---
 
@@ -100,20 +102,18 @@ Timer1 {"Enable":1,"Mode":0,"Time":"00:30","Window":0,"Days":"1111111","Repeat":
 ```
 
 ```
-Backlog Timer2 {"Enable":1,"Mode":0,"Time":"05:00","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":1}; Timer3 {"Enable":1,"Mode":0,"Time":"05:05","Window":0,"Days":"1111111","Repeat":1,"Output":2,"Action":1}; Timer4 {"Enable":1,"Mode":0,"Time":"05:10","Window":0,"Days":"1111111","Repeat":1,"Output":3,"Action":1}
+Backlog Timer2 {"Enable":1,"Mode":1,"Time":"-00:15","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":1}; Timer3 {"Enable":1,"Mode":1,"Time":"-00:10","Window":0,"Days":"1111111","Repeat":1,"Output":2,"Action":1}; Timer4 {"Enable":1,"Mode":1,"Time":"-00:05","Window":0,"Days":"1111111","Repeat":1,"Output":3,"Action":1}
 ```
 
 ---
 
-## Optional: Sunrise-Based Watering
+## Optional: Fixed 5 AM Watering (instead of sunrise)
 
-To switch from fixed 05:00 to **15 minutes before sunrise** (adjusts automatically by season), change Timers 2–4 to `Mode: 1` with negative time offsets:
+If you prefer a fixed schedule instead of sunrise-based, replace Timers 2–4 with `Mode: 0`:
 
 ```
-Backlog Timer2 {"Enable":1,"Mode":1,"Time":"-00:15","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":1}; Timer3 {"Enable":1,"Mode":1,"Time":"-00:10","Window":0,"Days":"1111111","Repeat":1,"Output":2,"Action":1}; Timer4 {"Enable":1,"Mode":1,"Time":"-00:05","Window":0,"Days":"1111111","Repeat":1,"Output":3,"Action":1}
+Backlog Timer2 {"Enable":1,"Mode":0,"Time":"05:00","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":1}; Timer3 {"Enable":1,"Mode":0,"Time":"05:05","Window":0,"Days":"1111111","Repeat":1,"Output":2,"Action":1}; Timer4 {"Enable":1,"Mode":0,"Time":"05:10","Window":0,"Days":"1111111","Repeat":1,"Output":3,"Action":1}
 ```
-
-> Requires `Latitude` and `Longitude` to be set (already done above).
 
 ---
 
