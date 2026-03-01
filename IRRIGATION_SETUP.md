@@ -41,7 +41,17 @@ PulseTime values > 111 are interpreted as `(value - 100)` seconds.
 Backlog PulseTime1 310; PulseTime2 280; PulseTime3 220
 ```
 
-### 2. Location (for sunrise-based scheduling)
+### 2. Power-On State
+
+All relays start **OFF** after a power outage or reboot. Timers will still fire at their scheduled times.
+
+```
+PowerOnState 0
+```
+
+> `PowerOnState` is a **global** setting (applies to all relays). Per-relay boot behavior is not natively supported, but can be achieved via Rules if needed.
+
+### 3. Location (for sunrise-based scheduling)
 
 Set to Wieliczka, Poland:
 
@@ -49,13 +59,13 @@ Set to Wieliczka, Poland:
 Backlog Latitude 49.9833; Longitude 20.0667
 ```
 
-### 3. Enable Timers
+### 4. Enable Timers
 
 ```
 Timers 1
 ```
 
-### 4. Scheduled Tasks
+### 5. Scheduled Tasks
 
 #### Timer1 — LEDs OFF at 00:30
 
@@ -87,6 +97,10 @@ Run these in the Tasmota console at `http://192.168.20.68/cs?`, **one block at a
 
 ```
 Backlog PulseTime1 310; PulseTime2 280; PulseTime3 220
+```
+
+```
+PowerOnState 0
 ```
 
 ```
@@ -130,3 +144,4 @@ After applying, verify with these console commands:
 | `Timer1` | LED off schedule |
 | `Timer2` / `Timer3` / `Timer4` | Watering schedules |
 | `Latitude` / `Longitude` | Location for sunrise calc |
+| `PowerOnState` | Boot behavior (0 = all OFF) |
